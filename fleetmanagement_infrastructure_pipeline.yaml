@@ -1,0 +1,29 @@
+variables:
+  - group: Terraform_Backend
+  - group: FleetManagement_Infrastructure
+
+trigger:
+  - main
+
+pool:
+  vmImage: "ubuntu-latest"
+
+steps:
+  - task: AzureCLI@2
+    displayName: "Debug: Validate Library Variables"
+    inputs:
+      azureSubscription: "$(azurerm_service_connection)"
+      scriptType: "bash"
+      scriptLocation: "inlineScript"
+      inlineScript: |
+        echo "===================================================="
+        echo "          AZURE DEVOPS VARIABLE DEBUG               "
+        echo "===================================================="
+        echo "default-env-suffix:         $(default-env-suffix)"
+        echo "is_local:                   $(is_local)"
+        echo "mssql_server_name:          $(mssql_server_name)"
+        echo "azurerm_service_connection: $(azurerm_service_connection)"
+        echo "===================================================="
+        echo "Context: Connected to Azure via $(azurerm_service_connection)"
+        az account show --query "{SubscriptionName:name, SubscriptionID:id}" --output table
+        echo "===================================================="
