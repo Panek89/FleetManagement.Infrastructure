@@ -65,7 +65,6 @@ steps:
     inputs:
       provider: "azurerm"
       command: "plan"
-      workingDirectory: "$(System.DefaultWorkingDirectory)/FleetManagement.Infrastructure"
       environmentServiceNameAzureRM: "$(azurerm_service_connection)"
       commandOptions: '-var="shared_resource_group_name=$(fm_resource_group_name)" -var="location=$(fm_location)"'
 
@@ -74,6 +73,5 @@ steps:
     inputs:
       provider: "azurerm"
       command: "apply"
-      workingDirectory: "$(System.DefaultWorkingDirectory)/FleetManagement.Infrastructure"
       environmentServiceNameAzureRM: "$(azurerm_service_connection)"
       commandOptions: '-var="shared_resource_group_name=$(fm_resource_group_name)" -var="location=$(fm_location)"'
