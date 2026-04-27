@@ -38,6 +38,20 @@ steps:
       script: |
         echo "Check installed terraform version: $(terraform -version)"
 
+  - task: Bash@3
+    displayName: "Debug: List Infrastructure folder"
+    inputs:
+      targetType: "inline"
+      script: |
+        echo "=== Actual working directory (PWD) ==="
+        pwd
+
+        echo "=== Content of main directory ==="
+        ls -la $(System.DefaultWorkingDirectory)
+
+        echo "=== Infrastructure folder content ==="
+        ls -la $(System.DefaultWorkingDirectory)/FleetManagement.Infrastructure
+
   - task: TerraformTask@5
     displayName: "Terraform Init"
     inputs:
