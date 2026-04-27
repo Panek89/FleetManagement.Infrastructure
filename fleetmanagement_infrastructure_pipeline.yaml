@@ -10,10 +10,14 @@ pool:
 
 steps:
   - task: Bash@3
-    displayName: "Debug: Show Variables"
+    displayName: "Debug: System Information"
     inputs:
       targetType: 'inline'
       script: |
+        echo "Check pre-installed Terraform version:"
+        terraform --version
+        which terraform
+        echo "----------------------------------------------------"
         echo "Backend Variables:"
         echo "  asa_name: $(asa_name)"
         echo "  asa_bs_name: $(asa_bs_name)"
@@ -22,12 +26,6 @@ steps:
         echo "Fleet Management Variables:"
         echo "  fm_resource_group_name: $(fm_resource_group_name)"
         echo "  fm_location: $(fm_location)"
-        echo "  fm_default-env-suffix: $(fm_default-env-suffix)"
-
-  - task: TerraformInstaller@1
-    displayName: "Install Terraform"
-    inputs:
-      terraformVersion: 'latest'
 
   - task: TerraformTaskV4@4
     displayName: "Terraform Init"
