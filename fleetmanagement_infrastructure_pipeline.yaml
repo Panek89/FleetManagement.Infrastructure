@@ -9,21 +9,52 @@ pool:
   vmImage: "ubuntu-latest"
 
 steps:
-  - task: AzureCLI@2
-    displayName: "Debug: Validate Library Variables"
+  - task: Bash@3
+    displayName: "Debug: Show Variables"
     inputs:
-      azureSubscription: "$(azurerm_service_connection)"
-      scriptType: "bash"
-      scriptLocation: "inlineScript"
-      inlineScript: |
-        echo "===================================================="
-        echo "          AZURE DEVOPS VARIABLE DEBUG               "
-        echo "===================================================="
-        echo "default-env-suffix:         $(default-env-suffix)"
-        echo "is_local:                   $(is_local)"
-        echo "mssql_server_name:          $(mssql_server_name)"
-        echo "azurerm_service_connection: $(azurerm_service_connection)"
-        echo "===================================================="
-        echo "Context: Connected to Azure via $(azurerm_service_connection)"
-        az account show --query "{SubscriptionName:name, SubscriptionID:id}" --output table
-        echo "===================================================="
+      targetType: 'inline'
+      script: |
+        echo "Backend Variables:"
+        echo "  asa_name: $(asa_name)"
+        echo "  asa_bs_name: $(asa_bs_name)"
+        echo "  resource_group_name: $(resource_group_name)"
+        echo "  azurerm_service_connection: $(azurerm_service_connection)"
+        echo "Fleet Management Variables:"
+        echo "  fm_resource_group_name: $(fm_resource_group_name)"
+        echo "  fm_location: $(fm_location)"
+        echo "  fm_default-env-suffix: $(fm_default-env-suffix)"
+
+  - task: TerraformInstaller@1
+    displayName: "Install Terraform"
+    inputs:
+      terraformVersion: 'latest'
+
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Init"
+    inputs:
+      provider: 'azurerm'
+      command: 'init'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/FleetManagement.Infrastructure'
+      backendServiceArm: '$(azurerm_service_connection)'
+      backendAzureRmResourceGroupName: '$(resource_group_name)'
+      backendAzureRmStorageAccountName: '$(asa_name)'
+      backendAzureRmContainerName: '$(asa_bs_name)'
+      backendAzureRmKey: 'shared-infrastructure.tfstate'
+
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Plan"
+    inputs:
+      provider: 'azurerm'
+      command: 'plan'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/FleetManagement.Infrastructure'
+      environmentServiceNameAzureRM: '$(azurerm_service_connection)'
+      commandOptions: '-var="shared_resource_group_name=$(fm_resource_group_name)" -var="location=$(fm_location)"'
+
+  - task: TerraformTaskV4@4
+    displayName: "Terraform Apply"
+    inputs:
+      provider: 'azurerm'
+      command: 'apply'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/FleetManagement.Infrastructure'
+      environmentServiceNameAzureRM: '$(azurerm_service_connection)'
+      commandOptions: '-var="shared_resource_group_name=$(fm_resource_group_name)" -var="location=$(fm_location)"'
