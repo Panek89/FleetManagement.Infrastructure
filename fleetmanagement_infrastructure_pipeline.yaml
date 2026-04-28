@@ -69,6 +69,8 @@ steps:
     env:
       TF_VAR_shared_resource_group_name: "$(fm_resource_group_name)"
       TF_VAR_location: "$(fm_location)"
+      TF_VAR_env_suffix: "$(fm_default-env-suffix)"
+      TF_VAR_mssql_server_name: "$(fm_mssql_server_name)"
 
   - task: TerraformTaskV4@4
     displayName: "Terraform Apply"
@@ -79,3 +81,5 @@ steps:
     env:
       TF_VAR_shared_resource_group_name: "$(fm_resource_group_name)"
       TF_VAR_location: "$(fm_location)"
+      TF_VAR_env_suffix: "$(fm_default-env-suffix)"
+      TF_VAR_mssql_server_name: "$(fm_mssql_server_name)"
