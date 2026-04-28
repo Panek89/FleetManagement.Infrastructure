@@ -26,7 +26,8 @@ steps:
         echo "Fleet Management Variables:"
         echo "  fm_resource_group_name: $(fm_resource_group_name)"
         echo "  fm_location: $(fm_location)"
-        echo "  fm_suffix: "$(fm_suffix)""
+        echo "  fm_suffix: $(fm_suffix)"
+        echo "  fm_default-env-suffix: $(fm_default-env-suffix)"
 
   - task: TerraformInstaller@1
     inputs:
