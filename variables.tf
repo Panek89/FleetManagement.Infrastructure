@@ -18,3 +18,8 @@ variable "mssql_server_name" {
   type        = string
   description = "Base name for the MSSQL Server"
 }
+
+variable "fm_suffix" {
+  type        = string
+  description = "Suffix for FleetManagement project"
+}

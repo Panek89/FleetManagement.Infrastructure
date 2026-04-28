@@ -1,5 +1,5 @@
 resource "azurerm_app_configuration" "app_configuration" {
-  name                = "appconf-${var.env_suffix}-${var.location}"
+  name                = "appconf-${var.fm_suffix}-${var.env_suffix}"
   resource_group_name = azurerm_resource_group.shared_rg.name
   location            = azurerm_resource_group.shared_rg.location
   sku                 = "free"

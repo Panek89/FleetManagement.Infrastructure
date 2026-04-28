@@ -5,7 +5,7 @@ resource "random_password" "sql_admin_password" {
 }
 
 resource "azurerm_mssql_server" "mssql_server" {
-  name                         = "${var.mssql_server_name}-${var.env_suffix}"
+  name                         = "${var.mssql_server_name}-${var.fm_suffix}-${var.env_suffix}"
   resource_group_name          = azurerm_resource_group.shared_rg.name
   location                     = azurerm_resource_group.shared_rg.location
   version                      = "12.0"

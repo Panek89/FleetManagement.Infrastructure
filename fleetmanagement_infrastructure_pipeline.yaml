@@ -26,6 +26,7 @@ steps:
         echo "Fleet Management Variables:"
         echo "  fm_resource_group_name: $(fm_resource_group_name)"
         echo "  fm_location: $(fm_location)"
+        echo "  fm_suffix: "$(fm_suffix)""
 
   - task: TerraformInstaller@1
     inputs:
@@ -71,6 +72,7 @@ steps:
       TF_VAR_location: "$(fm_location)"
       TF_VAR_env_suffix: "$(fm_default-env-suffix)"
       TF_VAR_mssql_server_name: "$(fm_mssql_server_name)"
+      TF_VAR_fm_suffix: "$(fm_suffix)"
 
   - task: TerraformTaskV4@4
     displayName: "Terraform Apply"
@@ -83,3 +85,4 @@ steps:
       TF_VAR_location: "$(fm_location)"
       TF_VAR_env_suffix: "$(fm_default-env-suffix)"
       TF_VAR_mssql_server_name: "$(fm_mssql_server_name)"
+      TF_VAR_fm_suffix: "$(fm_suffix)"

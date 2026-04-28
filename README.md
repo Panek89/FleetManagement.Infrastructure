@@ -12,6 +12,7 @@ This group contains infrastructure-related configuration variables for the Fleet
 | `fm_location` | Azure region for resource deployment. |
 | `fm_mssql_server_name` | Base name of the MSSQL Server instance. |
 | `fm_resource_group_name` | Name of the shared Azure Resource Group. |
+| `fm_suffix` | Suffix for FleetManagement project. |
 
 ## Terraform_Backend
 This group contains variables required for configuring the Terraform backend state storage.
