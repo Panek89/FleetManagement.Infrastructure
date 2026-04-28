@@ -7,11 +7,11 @@ This group contains infrastructure-related configuration variables for the Fleet
 
 | Variable Name | Description |
 | :--- | :--- |
-| `fm_default-env-suffix` | Default environment suffix (e.g., dev, prod). |
+| `fm_default-env-suffix` | Default environment suffix (e.g., dev, prod). Used as `env_suffix` in Terraform. |
 | `fm_is_local` | Flag indicating if the environment is local. |
 | `fm_location` | Azure region for resource deployment. |
-| `fm_mssql_server_name` | Name of the MSSQL Server instance. |
-| `fm_resource_group_name` | Name of the Azure Resource Group. |
+| `fm_mssql_server_name` | Base name of the MSSQL Server instance. |
+| `fm_resource_group_name` | Name of the shared Azure Resource Group. |
 
 ## Terraform_Backend
 This group contains variables required for configuring the Terraform backend state storage.
