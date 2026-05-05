@@ -13,6 +13,7 @@ This group contains infrastructure-related configuration variables for the Fleet
 | `fm_mssql_server_name` | Base name of the MSSQL Server instance. |
 | `fm_resource_group_name` | Name of the shared Azure Resource Group. |
 | `fm_suffix` | Suffix for FleetManagement project. |
+| `fm_docker_hub_service_connection_name` | Name of the Docker Hub connection service. |
 
 ## Terraform_Backend
 This group contains variables required for configuring the Terraform backend state storage.
