@@ -19,10 +19,12 @@ steps:
         which terraform
         echo "----------------------------------------------------"
         echo "Backend Variables (Group ID 1):"
-        az pipelines variable-group show --group-id 1 --organization "$(fm_organization_name)" --project "$(fm_suffix)" --output table
+        az pipelines variable-group show --group-id 1 --organization "$(fm_organization_name)" --project "$(fm_suffix)" --output json \
+          | jq -r '.variables | to_entries[] | "  \(.key): \(.value.value // "(secret)")"'
         echo "----------------------------------------------------"
         echo "Fleet Management Variables (Group ID 2):"
-        az pipelines variable-group show --group-id 2 --organization "$(fm_organization_name)" --project "$(fm_suffix)" --output table
+        az pipelines variable-group show --group-id 2 --organization "$(fm_organization_name)" --project "$(fm_suffix)" --output json \
+          | jq -r '.variables | to_entries[] | "  \(.key): \(.value.value // "(secret)")"'
     env:
       AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
 
