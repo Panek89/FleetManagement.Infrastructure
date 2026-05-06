@@ -9,13 +9,11 @@ pool:
   vmImage: "ubuntu-latest"
 
 steps:
-  - task: AzureCLI@2
+  - task: Bash@3
     displayName: "Debug: Display Variable Groups"
     inputs:
-      azureSubscription: "$(azurerm_service_connection)"
-      scriptType: "bash"
-      scriptLocation: "inlineScript"
-      inlineScript: |
+      targetType: "inline"
+      script: |
         echo "Check pre-installed Terraform version:"
         terraform --version
         which terraform
@@ -25,6 +23,8 @@ steps:
         echo "----------------------------------------------------"
         echo "Fleet Management Variables (Group ID 2):"
         az pipelines variable-group show --group-id 2 --organization "$(fm_organization_name)" --project "$(fm_suffix)" --output table
+    env:
+      AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
 
   - task: TerraformInstaller@1
     inputs:
