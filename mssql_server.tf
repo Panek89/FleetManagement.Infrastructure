@@ -12,6 +12,11 @@ resource "azurerm_mssql_server" "mssql_server" {
   administrator_login          = "sqladmin"
   administrator_login_password = random_password.sql_admin_password.result
 
+  azuread_administrator {
+    login_username = "AzureAD Admin"
+    object_id      = data.azurerm_client_config.current.object_id
+  }
+
   depends_on = [azurerm_app_configuration.app_configuration]
 }
 
