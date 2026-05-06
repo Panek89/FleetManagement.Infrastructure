@@ -21,10 +21,10 @@ steps:
         which terraform
         echo "----------------------------------------------------"
         echo "Backend Variables (Group ID 1):"
-        az pipelines variable-group show --group-id 1 --output table
+        az pipelines variable-group show --group-id 1 --organization "$(fm_organization_name)" --output table
         echo "----------------------------------------------------"
         echo "Fleet Management Variables (Group ID 2):"
-        az pipelines variable-group show --group-id 2 --output table
+        az pipelines variable-group show --group-id 2 --organization "$(fm_organization_name)" --output table
 
   - task: TerraformInstaller@1
     inputs:
